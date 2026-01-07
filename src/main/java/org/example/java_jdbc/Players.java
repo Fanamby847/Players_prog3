@@ -10,14 +10,15 @@ public class Players {
     private Team team;
     private Integer goalNb;
 
-    public Players(Integer id, String name, Integer age, Position position, Team team, Integer goalNb) {
+    public Players(Integer id, String name, Integer age, Position position, Team team) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.position = position;
         this.team = team;
-        this.goalNb = goalNb;
     }
+
+    public Players(){}
 
     public Integer getGoalNb() {
         return goalNb;

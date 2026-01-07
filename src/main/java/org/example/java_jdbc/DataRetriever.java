@@ -197,24 +197,28 @@ public class DataRetriever {
     }
 
     public List<Players> getAllPlayers() throws SQLException {
-        List<Players> players = new ArrayList<Players>();
+        List<Players> players = new ArrayList<>();
 
-        String sql = "SELECT id, name_player, goal_nb FROM player";
+        Connection conn = dbConnection.getDBConnection();
+        String sql = "SELECT * FROM player";
+
         PreparedStatement ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            Players player = new Players();
-            player.setId((int) rs.getLong("id"));
-            player.setName(rs.getString("name"));
+            Players player = new Players(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getInt("age"),
+                    Position.valueOf(rs.getString("position")),
+                    null
+            );
 
-            // gestion du NULL
-            Integer goalNb = rs.getObject("goal_nb", Integer.class);
-            player.setGoalNb(goalNb);
-
+            player.setGoalNb(rs.getObject("goal_nb", Integer.class));
             players.add(player);
         }
 
         return players;
     }
+
 }
